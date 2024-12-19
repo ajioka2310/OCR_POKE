@@ -1,0 +1,5 @@
+# Pythonバイトコードファイルを無視
+*.pyc
+*.pyo
+__pycache__/
+debug/
