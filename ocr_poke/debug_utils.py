@@ -1,6 +1,11 @@
-import cv2
+"""
+デバック用関数
+"""
+
 import os
+import cv2
 from matplotlib import pyplot as plt
+
 
 def show_image(image, title="Image"):
     """
@@ -13,6 +18,7 @@ def show_image(image, title="Image"):
     plt.title(title)
     plt.axis("off")
     plt.show()
+
 
 def save_debug_image(image, output_path, filename="debug_image.png"):
     """

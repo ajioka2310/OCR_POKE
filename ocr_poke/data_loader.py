@@ -1,5 +1,10 @@
+"""
+データの読み込み
+"""
+
 import os
 import pandas as pd
+
 
 def load_pokemon_names(directory: str) -> pd.DataFrame:
     """
@@ -16,7 +21,7 @@ def load_pokemon_names(directory: str) -> pd.DataFrame:
 
     # ディレクトリ内の全てのファイルを取得
     for file in os.listdir(directory):
-        if file.endswith('.csv'):
+        if file.endswith(".csv"):
             file_path = os.path.join(directory, file)
             try:
                 df = pd.read_csv(file_path)
@@ -27,6 +32,16 @@ def load_pokemon_names(directory: str) -> pd.DataFrame:
     # 全てのデータフレームを結合
     if all_dataframes:
         combined_df = pd.concat(all_dataframes, ignore_index=True)
+        combined_df.columns = [
+            "Number",
+            "Japanese",
+            "English",
+            "German",
+            "French",
+            "Korean",
+            "Chinese (Simplified)",
+            "Chinese (Traditional)",
+        ]
         return combined_df
     else:
         print("No valid CSV files found in the directory.")

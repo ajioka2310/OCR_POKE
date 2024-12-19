@@ -1,9 +1,12 @@
+"""
+OCRのエンジン部分
+"""
+
 from PIL import Image
-import pytesseract
-from .preprocessing import remove_noise
-from .debug_utils import show_image, save_debug_image
-import cv2
+import pytesseract  # type: ignore
 import numpy as np
+from .preprocessing import remove_noise_image
+from .debug_utils import save_debug_image
 
 
 def ocr_from_image(image_path, debug=False):
@@ -18,21 +21,20 @@ def ocr_from_image(image_path, debug=False):
     """
     try:
         # ノイズ除去を実行
-        processed_image = remove_noise(image_path)
-
+        processed_image = remove_noise_image(image_path)
+        print("processed_image", processed_image.shape, processed_image.dtype)
         if debug:
-            show_image(processed_image, title="Processed Image")
             save_debug_image(processed_image, "./debug", "processed_image.png")
 
         # OpenCVの画像をPILの画像に変換
         image = Image.fromarray(processed_image)
         new_size = tuple(2 * x for x in image.size)  # 解像度を2倍にする
         image = image.resize(new_size, Image.Resampling.LANCZOS)
-        image = image.point(lambda x: 255 if x < 128 else 0, "1")  # 二値化
 
         if debug:
+            # PIL画像をNumPy配列に戻して `processed_image` に再代入
             save_debug_image(
-                cv2.cvtColor(np.array(image), cv2.COLOR_RGB2BGR),
+                np.array(image).astype(np.uint8),
                 "./debug",
                 "resized_image.png",
             )
