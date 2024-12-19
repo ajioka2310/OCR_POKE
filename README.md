@@ -44,7 +44,7 @@ OCR を実行したい画像ファイルを `images/tests/` ディレクトリ�
 VS Code のターミナルで以下のコマンドを実行してください：
 
 ```bash
-python src/run_ocr.py
+python run_ocr.py
 ```
 
 ---
