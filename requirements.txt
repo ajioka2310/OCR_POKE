@@ -1,3 +1,8 @@
 pillow
 pytesseract
 pyautogui
+opencv-python-headless
+requests
+bs4
+pandas
+IPython

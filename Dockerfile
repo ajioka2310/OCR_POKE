@@ -15,7 +15,6 @@ RUN apt-get update && apt-get install -y \
 # Pythonライブラリの依存関係をコピーしてインストール
 COPY requirements.txt requirements.txt
 RUN pip install --no-cache-dir -r requirements.txt
-RUN pip install opencv-python-headless
 
 # プロジェクトファイルをコンテナにコピー
 COPY . .

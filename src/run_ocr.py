@@ -47,6 +47,9 @@ def ocr_from_image(image_path):
         print(f"エラーが発生しました: {e}")
         return ""
 
+
+
+
 if __name__ == "__main__":
     # Configファイルを読み込む
     config_path = os.path.join(os.path.dirname(__file__), "config.ini")
