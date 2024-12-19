@@ -9,6 +9,7 @@ RUN apt-get update && apt-get install -y \
     tesseract-ocr \
     tesseract-ocr-jpn \
     libtesseract-dev \
+    git \
     && apt-get clean
 
 # Pythonライブラリの依存関係をコピーしてインストール
@@ -18,5 +19,5 @@ RUN pip install --no-cache-dir -r requirements.txt
 # プロジェクトファイルをコンテナにコピー
 COPY . .
 
-# アプリケーションのエントリポイント（必要に応じて修正）
-CMD ["python", "main.py"]
+# # アプリケーションのエントリポイント（必要に応じて修正）
+# CMD ["python", "main.py"]

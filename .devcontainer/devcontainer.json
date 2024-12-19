@@ -1,0 +1,16 @@
+{
+  "name": "Python Docker OCR",
+  "context": "..",
+  "dockerFile": "../Dockerfile",
+  "workspaceFolder": "/workspaces/OCR_POKE",
+  "settings": {
+      "terminal.integrated.defaultProfile.linux": "bash",
+      "python.pythonPath": "/usr/local/bin/python"
+  },
+  "extensions": [
+      "ms-python.python",
+      "ms-python.vscode-pylance"
+  ],
+  "postCreateCommand": "pip install --no-cache-dir -r requirements.txt",
+  "remoteUser": "root"
+}
