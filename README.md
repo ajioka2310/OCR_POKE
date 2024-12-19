@@ -1,66 +1,53 @@
-# Python Docker OCR プロジェクト
+# OCR_POKE
 
-このプロジェクトは、Dockerを利用してOCR機能を開発するPythonアプリケーションです。開発環境はVSCodeのRemote - Containers拡張機能を利用してコンテナ内でセットアップされます。
+日本語の画像からテキストを抽出するOCRツールです。
 
----
+## セットアップ手順
 
-## 必要なツール
+### 1. リポジトリのクローン
 
-- **Docker Desktop**: [公式サイト](https://www.docker.com/products/docker-desktop)からインストールしてください。
-- **Visual Studio Code (VSCode)**: [公式サイト](https://code.visualstudio.com/)からインストールしてください。
-- **Remote - Containers 拡張機能**: VSCode内で拡張機能をインストールします。
+```bash
+git clone https://github.com/ajioka2310/OCR_POKE.git
+cd OCR_POKE
+```
 
----
+### 2. 必要なソフトウェアのインストール
 
-## 環境セットアップと実行手順
+- [Docker](https://www.docker.com/get-started)
+- [Visual Studio Code (VS Code)](https://code.visualstudio.com/)
+- VS Code 拡張機能:
+  - [Remote - Containers](https://marketplace.visualstudio.com/items?itemName=ms-vscode-remote.remote-containers)
 
-1. **リポジトリをクローン**
-   プロジェクトをローカル環境にクローンします：
-   ```bash
-   git clone https://github.com/USERNAME/python-docker-ocr.git
-   cd python-docker-ocr
-   ```
+### 3. 開発環境のセットアップ
 
-2. **VSCodeでプロジェクトを開く**
-   プロジェクトディレクトリ内で以下を実行し、VSCodeを起動します：
-   ```bash
-   code .
-   ```
+1. VS Code でリポジトリを開きます。
 
-3. **コンテナ内で開発環境をセットアップ**
-   - 左下の緑色のアイコンをクリックし、「Reopen in Container」を選択します。
-   - 初回はコンテナがビルドされ、必要な依存関係がインストールされます（`requirements.txt` に基づきインストールされます）。
+2. 左下の「><」アイコン（Remote - Containers）をクリックし、「Reopen in Container」を選択します。
 
-4. **スクリプトの実行**
-   - ターミナルを開き、コンテナ内で以下のコマンドを実行します：
-     ```bash
-     python3 /workspaces/OCR_POKE/src/run_ocr.py
-     ```
+3. DevContainer の初回セットアップが開始されます。必要な Docker イメージのビルドや依存関係のインストールが自動的に行われます。
 
----
+### 4. `config.ini` の設定
 
-## 開発環境の特徴
+プロジェクトのルートディレクトリに `config.ini` ファイルを作成し、以下の内容を記述してください：
 
-- **Dockerを利用**:
-  開発環境がコンテナ内で統一されており、ホスト環境に依存しません。
+```ini
+[Settings]
+image_path = /workspaces/OCR_POKE/images/tests/test1.png
+```
 
-- **VSCode連携**:
-  Remote - Containers拡張機能により、コンテナ内のコード編集やデバッグが簡単に行えます。
+### 5. 画像ファイルの配置
 
-- **Git統合**:
-  コンテナ内でGitを利用できます。VSCodeのGit GUIもサポートされています。
+OCR を実行したい画像ファイルを `images/tests/` ディレクトリに配置してください。
+
+### 6. OCR の実行
+
+VS Code のターミナルで以下のコマンドを実行してください：
+
+```bash
+python src/run_ocr.py
+```
 
 ---
 
-## 注意事項
-
-- **コンテナがビルドされない場合**:
-  Docker Desktopが正常に動作していることを確認してください。
-
-- **日本語OCRの認識**:
-  Tesseractの日本語データ（`jpn.traineddata`）は、Dockerfileでインストールされています。
-
----
-
-これでプロジェクトの開発環境がセットアップされ、すぐに開発を開始できます！
+これらの手順に従ってセットアップと実行を行ってください。問題が発生した場合はお知らせください。
 

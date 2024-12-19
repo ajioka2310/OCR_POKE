@@ -37,7 +37,7 @@ def ocr_from_image(image_path):
         image = Image.fromarray(processed_image)
         new_size = tuple(2 * x for x in image.size)  # 解像度を2倍にする
         image = image.resize(new_size, Image.Resampling.LANCZOS)
-        image = image.point(lambda x: 0 if x < 128 else 255, '1')  # 二値化
+        image = image.point(lambda x: 255 if x < 128 else 0, '1')  # 二値化
 
         # OCRを実行
         text = pytesseract.image_to_string(image, lang="jpn")
