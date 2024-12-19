@@ -34,7 +34,7 @@
 4. **スクリプトの実行**
    - ターミナルを開き、コンテナ内で以下のコマンドを実行します：
      ```bash
-     python main.py
+     python3 /workspaces/OCR_POKE/src/run_ocr.py
      ```
 
 ---
