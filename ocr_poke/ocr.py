@@ -24,16 +24,15 @@ def ocr_from_image(image_path, debug=False):
         str: 抽出された文字列
     """
     try:
-        img = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
+        image = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
         if debug:
-            save_debug_image(img,"preprocessed_image.png")
+            save_debug_image(image,"preprocessed_image.png")
             logger.debug("Preprocessed image saved as preprocessed_image.png")
-        # ノイズ除去を実行
-        processed_image = remove_noise_image(img)
+        # # ノイズ除去を実行
+        # image = remove_noise_image(image)
         # OpenCVの画像をPILの画像に変換
-        image = Image.fromarray(processed_image)
-        
-        new_size = tuple(2 * x for x in image.size)  # 解像度を2倍にする
+        image = Image.fromarray(image)
+        new_size = tuple(3 * x for x in image.size)  # 解像度を2倍にする
         logger.debug(f"resize_image size: {image.size} to {new_size}")
         image = image.resize(new_size, Image.Resampling.LANCZOS)
 
@@ -47,7 +46,7 @@ def ocr_from_image(image_path, debug=False):
 
         # OCRを実行
         text = pytesseract.image_to_string(image, lang="jpn")
-        logger.info("OCR processing completed successfully")
+        logger.debug("OCR processing completed successfully")
 
         return text
     except Exception as e:

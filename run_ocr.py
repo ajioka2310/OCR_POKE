@@ -1,3 +1,4 @@
+import time
 import configparser
 import os
 import json
@@ -37,19 +38,35 @@ if __name__ == "__main__":
     with open(clip_config_path, "r") as f:
         clip_config = json.load(f)
     logger.debug(f"clip_config: {clip_config}")
-    for image_name, coordinates in clip_config.items():
-        clip_image(coordinates, image_name)
-        logger.info("clip_image")
-    ally_path = config.ALLY_PATH
-    logger.debug(f"味方ポケモンのパス:{ally_path}")
-    final_name, max_similarity = extract_pokemon_names(ally_path, pokemon_names_df)
-    logger.info("**********************************************")
-    logger.info("最終的な判断：味方")
-    logger.info(f"{final_name}, {max_similarity}")
     
-    enemy_path = config.ENEMY_PATH
-    logger.debug(f"敵ポケモンのパス:{enemy_path}")
-    final_name, max_similarity = extract_pokemon_names(enemy_path, pokemon_names_df)
-    logger.info("**********************************************")
-    logger.info("最終的な判断：敵")
-    logger.info(f"{final_name}, {max_similarity}")
+        
+    ally_name = None
+    enemy_name = None
+    try:
+        while True:
+            
+            clip_image(clip_config)
+                
+            ally_path = config.ALLY_PATH
+            logger.debug(f"味方ポケモンのパス:{ally_path}")
+            final_name, max_similarity = extract_pokemon_names(ally_path, pokemon_names_df)
+            logger.debug("**********************************************")
+            logger.debug("最終的な判断：味方")
+            logger.debug(f"{final_name}, {max_similarity}")
+            if (ally_name!=final_name and final_name  is not None and max_similarity>50):
+                ally_name = final_name
+                logger.info(f"味方ポケモン:{ally_name} {max_similarity}")
+                
+            enemy_path = config.ENEMY_PATH
+            logger.debug(f"敵ポケモンのパス:{enemy_path}")
+            final_name, max_similarity = extract_pokemon_names(enemy_path, pokemon_names_df)
+            logger.debug("**********************************************")
+            logger.debug("最終的な判断：敵")
+            logger.debug(f"{final_name}, {max_similarity}")
+            if (enemy_name!=final_name and final_name is not None and max_similarity>50):
+                enemy_name = final_name
+                logger.info(f"敵ポケモン:{enemy_name}  {max_similarity}")
+            # 0.5秒待機
+            time.sleep(2)
+    except KeyboardInterrupt:
+        print("\nスクリーンショットを終了します。")

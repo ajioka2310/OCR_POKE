@@ -35,19 +35,35 @@ cd OCR_POKE
 image_path = /workspaces/OCR_POKE/images/tests/test1.png
 ```
 
-### 5. 画像ファイルの配置
+### 5. OCR の実行
+#### 5.1 スクリーンショットの調整
 
-OCR を実行したい画像ファイルを `images/tests/` ディレクトリに配置してください。
-
-### 6. OCR の実行
-
-VS Code のターミナルで以下のコマンドを実行してください：
+ローカル環境で下記を実行し、スクリーンショットを取りたいモニタを選択
 
 ```bash
-python run_ocr.py
+cd OCR_POKE/utils 
+python .\TakeScreenshot_each.py -- debug
 ```
 
----
+ローカル環境で下記を実行し、スクリーンショットを一枚とる。
+```bash
+python .\TakeScreenshot_each.py --single --monitor_num {hoge}
+```
+
+#### 5.2 切り抜き場所の選定
+utils/set_clip_config.ipynbをローカルで実行し、切り抜きたい領域を指定して保存する。
+Toggleボタンで敵・味方どちらの領域を設定するか決めてからSAVEしてね。
+![alt text](images/readme/image.png)
+
+#### 5.3 スクリーンショット連続実行
+ローカル環境で下記を実行
+```bash
+python .\TakeScreenshot_each.py --monitor_num {hoge}
+```
+
+#### 5.4 OCR
+仮想環境でrun_ocr.pyを実行
+
 
 これらの手順に従ってセットアップと実行を行ってください。問題が発生した場合はお知らせください。
 

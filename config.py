@@ -9,7 +9,9 @@ load_dotenv()
 IMAGE_PATH = os.getenv("IMAGE_PATH", "./images")  # デフォルト値
 DEBUG_PATH = os.getenv("DEBUG_PATH", "./debug")  # デフォルト値
 CLIPPED_IMAGES_PATH = os.path.join(IMAGE_PATH, "clipped_images")  # Add this line
-INPUT_IMAGE_PATH = os.getenv("INPUT_IMAGE_PATH", "./images/input/test1.png")  # デフォルト値
+INPUT_IMAGE_PATH = os.getenv("INPUT_IMAGE_PATH", "./images/input/input.png")  # デフォルト値
+INPUT_LOCK_PATH = os.getenv("INPUT_IMAGE_PATH", "./images/input/input.lock")  # デフォルト値
+
 LOG_PATH = os.getenv("LOG_PATH", "./logs")        # デフォルト値
 
 # 新しい設定を追加
@@ -25,7 +27,7 @@ LOG_FILE = os.path.join(LOG_PATH, "app.log")
 os.makedirs(LOG_PATH, exist_ok=True)
 
 logging.basicConfig(
-    level=logging.DEBUG,  # ログレベルをDEBUGに設定　INFO
+    level=logging.INFO,  # ログレベルをDEBUGに設定　INFO DEBUG
     format="%(asctime)s [%(levelname)s] %(message)s",
     handlers=[
         logging.FileHandler(LOG_FILE),

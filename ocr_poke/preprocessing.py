@@ -4,9 +4,10 @@
 
 import os
 import re
+import time
 from PIL import Image
 import cv2
-from config import INPUT_IMAGE_PATH, CLIPPED_IMAGES_PATH  # Update this import
+from config import INPUT_IMAGE_PATH, INPUT_LOCK_PATH, CLIPPED_IMAGES_PATH  # Update this import
 import logging
 
 # ロガーの設定
@@ -14,7 +15,16 @@ logging.basicConfig(level=logging.INFO)
 logger = logging.getLogger(__name__)
 
 
-def clip_image(coordinates, image_name, debug=False):
+def wait_for_file(file_path, lock_path, timeout=10):
+    start_time = time.time()
+    while os.path.exists(lock_path):
+        if time.time() - start_time > timeout:
+            raise TimeoutError(f"ロック解除を待つ間にタイムアウトしました: {lock_path}")
+        logger.debug("ファイルがロックされています。解除を待っています...")
+        time.sleep(0.05)
+
+
+def clip_image(clip_config,debug=False):
     """
     画像をクリップする
     Args:
@@ -25,15 +35,17 @@ def clip_image(coordinates, image_name, debug=False):
     Returns:
         None
     """
-    logger.debug(f"clip_image started with image_name: {image_name}")
+    wait_for_file(INPUT_IMAGE_PATH, INPUT_LOCK_PATH)
     image = Image.open(INPUT_IMAGE_PATH)
-    for _ , coord in enumerate(coordinates):
+    
+    for image_name, coord in clip_config.items():
+        logger.debug(f"clip_image started with image_name: {image_name}")
         # 指定された座標で画像をクロップする
         cropped_image = image.crop((
-            coord["x1"],
-            coord["y1"],
-            coord["x2"],
-            coord["y2"]
+            coord[0]["x1"],
+            coord[0]["y1"],
+            coord[0]["x2"],
+            coord[0]["y2"]
         ))
         if debug:
             output_path = CLIPPED_IMAGES_PATH
