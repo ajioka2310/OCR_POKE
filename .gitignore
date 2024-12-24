@@ -8,3 +8,4 @@ debug/
 images/clipped_images/*.png
 images/debug/*.png
 config/clip_config.json
+logs/

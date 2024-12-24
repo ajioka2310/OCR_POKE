@@ -1,3 +1,4 @@
+import logging
 from dotenv import load_dotenv
 import os
 
@@ -19,4 +20,22 @@ CLIP_CONFIG_PATH = os.getenv("CLIP_CONFIG_PATH", "./config/clip_config.json")
 GRID_IMAGE_PATH = os.path.join(DEBUG_PATH, "grid_with_labels.png") 
 
 
-# 他の設定が必要な場合ここに追加
+# ロガーの設定
+LOG_FILE = os.path.join(LOG_PATH, "app.log")
+os.makedirs(LOG_PATH, exist_ok=True)
+
+logging.basicConfig(
+    level=logging.DEBUG,  # ログレベルをDEBUGに設定　INFO
+    format="%(asctime)s [%(levelname)s] %(message)s",
+    handlers=[
+        logging.FileHandler(LOG_FILE),
+        logging.StreamHandler()
+    ]
+)
+
+logger = logging.getLogger(__name__)
+
+# 特定のライブラリのログレベルを設定
+logging.getLogger('matplotlib').setLevel(logging.WARNING)
+logging.getLogger('PIL').setLevel(logging.WARNING)
+logging.getLogger('pytesseract').setLevel(logging.WARNING)
