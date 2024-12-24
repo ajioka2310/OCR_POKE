@@ -10,6 +10,7 @@ RUN apt-get update && apt-get install -y \
     tesseract-ocr-jpn \
     libtesseract-dev \
     git \
+    x11-xserver-utils \
     && apt-get clean
 
 # Pythonライブラリの依存関係をコピーしてインストール

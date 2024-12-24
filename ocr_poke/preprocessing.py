@@ -1,21 +1,60 @@
 """
-画像の前処理を行う
+画像・文字列の前処理を行う
 """
 
+import os
 import re
+from PIL import Image
 import cv2
+from config import INPUT_IMAGE_PATH, CLIPPED_IMAGES_PATH  # Update this import
 
 
-def remove_noise_image(image_path):
+def clip_image(coordinates, image_name, debug=False):
+    image = Image.open(INPUT_IMAGE_PATH)
+    for _ , coord in enumerate(coordinates):
+        cropped_image = image.crop((
+            coord["x1"],
+            coord["y1"],
+            coord["x2"],
+            coord["y2"]
+        ))
+        if debug:
+            output_path = CLIPPED_IMAGES_PATH
+        else:
+            output_path = CLIPPED_IMAGES_PATH  # Use CLIPPED_IMAGES_PATH from config
+        filename = f"{image_name}.png"
+        # 画像を保存
+        if not os.path.exists(output_path):
+            os.makedirs(output_path)  # 保存先ディレクトリがなければ作成する
+        full_path = os.path.join(output_path, filename)
+        cropped_image.save(full_path)
+        
+
+def resize_image(image_path, output_path, size):
+    """
+    画像をリサイズする
+    Args:
+        image_path (str): 入力画像のパス
+        output_path (str): 出力画像のパス
+        size (tuple): リサイズ後のサイズ (width, height)
+
+    Returns:
+        None
+    """
+    image = Image.open(image_path)
+    resized_image = image.resize(size)
+    resized_image.save(output_path)
+
+
+def remove_noise_image(img):
     """
     ノイズ除去を行う
     Args:
-        image_path (str): 画像ファイルのパス
+        img(numpy.ndarray): ノイズ除去前の画像
 
     Returns:
         numpy.ndarray: ノイズ除去後の画像
     """
-    img = cv2.imread(image_path, cv2.IMREAD_GRAYSCALE)
     img = cv2.GaussianBlur(img, (5, 5), 0)  
     _, img = cv2.threshold(
         img, 0, 255, cv2.THRESH_BINARY + cv2.THRESH_OTSU
