@@ -2,8 +2,11 @@
 文字列の類似度を計算するモジュール
 """
 
+import logging
 from fuzzywuzzy import fuzz  # type: ignore
 
+# ロガーの設定
+logger = logging.getLogger(__name__)
 
 def find_closest_pokemon(ocr_output, df):
     """
@@ -31,6 +34,5 @@ def find_closest_pokemon(ocr_output, df):
                 closest_lang = lang
                 closest_name = row[lang]
                 closest_name_ja = row["Japanese"]  # 日本語名を取得
-                
 
     return closest_lang, closest_name, highest_similarity, closest_name_ja

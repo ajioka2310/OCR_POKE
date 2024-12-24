@@ -4,7 +4,9 @@
 
 import os
 import pandas as pd
+import logging
 
+logger = logging.getLogger(__name__)
 
 def load_pokemon_names(directory: str) -> pd.DataFrame:
     """
@@ -27,7 +29,7 @@ def load_pokemon_names(directory: str) -> pd.DataFrame:
                 df = pd.read_csv(file_path)
                 all_dataframes.append(df)
             except Exception as e:
-                print(f"Error reading {file}: {e}")
+                logger.error(f"Error reading {file}: {e}")
 
     # 全てのデータフレームを結合
     if all_dataframes:
@@ -44,5 +46,5 @@ def load_pokemon_names(directory: str) -> pd.DataFrame:
         ]
         return combined_df
     else:
-        print("No valid CSV files found in the directory.")
+        logger.info("No valid CSV files found in the directory.")
         return pd.DataFrame()

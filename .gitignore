@@ -3,3 +3,9 @@
 *.pyo
 __pycache__/
 debug/
+*.zip
+*.ipynb_checkpoints
+images/clipped_images/*.png
+images/debug/*.png
+config/clip_config.json
+logs/
